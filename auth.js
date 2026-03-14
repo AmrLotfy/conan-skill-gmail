@@ -72,7 +72,31 @@ function runAuthFlow(clientId, clientSecret) {
       const error  = url.searchParams.get('error')
 
       if (error || !code) {
-        res.end('<h2>Auth cancelled. You can close this tab.</h2>')
+        res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' })
+        res.end(`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Conan — Cancelled</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0a; color: #f0f0f0; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .card { background: #111; border: 1px solid #222; border-radius: 16px; padding: 48px 56px; text-align: center; max-width: 420px; width: 90%; }
+    .icon { font-size: 52px; margin-bottom: 20px; }
+    .brand { font-size: 13px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: #f59e0b; margin-bottom: 16px; }
+    h1 { font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 10px; }
+    p { font-size: 14px; color: #666; line-height: 1.6; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon">⚠️</div>
+    <div class="brand">Conan AI</div>
+    <h1>Cancelled</h1>
+    <p>Auth was cancelled. You can close this tab<br/>and run <em>conan-gmail-auth</em> again.</p>
+  </div>
+</body>
+</html>`)
         server.close()
         return reject(new Error(error || 'No code received'))
       }
@@ -89,11 +113,130 @@ function runAuthFlow(clientId, clientSecret) {
           name:             userInfo.name,
         })
 
-        res.end(`<h2>✅ Gmail connected as ${userInfo.email}. You can close this tab.</h2>`)
+        res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' })
+        res.end(`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Conan — Gmail Connected</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #0a0a0a;
+      color: #f0f0f0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card {
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 16px;
+      padding: 48px 56px;
+      text-align: center;
+      max-width: 420px;
+      width: 90%;
+      box-shadow: 0 0 40px rgba(99,102,241,0.08);
+    }
+    .icon {
+      font-size: 52px;
+      margin-bottom: 20px;
+    }
+    .brand {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #6366f1;
+      margin-bottom: 16px;
+    }
+    h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+    .email {
+      font-size: 14px;
+      color: #6366f1;
+      background: rgba(99,102,241,0.1);
+      border: 1px solid rgba(99,102,241,0.2);
+      border-radius: 8px;
+      padding: 8px 16px;
+      display: inline-block;
+      margin: 12px 0 20px;
+      font-weight: 500;
+    }
+    p {
+      font-size: 14px;
+      color: #666;
+      line-height: 1.6;
+    }
+    .close-hint {
+      margin-top: 28px;
+      font-size: 12px;
+      color: #444;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon">✅</div>
+    <div class="brand">Conan AI</div>
+    <h1>Gmail Connected</h1>
+    <div class="email">${userInfo.email}</div>
+    <p>You can now use Gmail in Conan chat.<br/>Try <em>"read my latest emails"</em></p>
+    <p class="close-hint">You can close this tab.</p>
+  </div>
+</body>
+</html>`)
         server.close()
         resolve(userInfo.email)
       } catch (err) {
-        res.end('<h2>❌ Auth failed. Check your client credentials and try again.</h2>')
+        res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' })
+        res.end(`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Conan — Auth Failed</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #0a0a0a;
+      color: #f0f0f0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card {
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 16px;
+      padding: 48px 56px;
+      text-align: center;
+      max-width: 420px;
+      width: 90%;
+    }
+    .icon { font-size: 52px; margin-bottom: 20px; }
+    .brand { font-size: 13px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: #ef4444; margin-bottom: 16px; }
+    h1 { font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 10px; }
+    p { font-size: 14px; color: #666; line-height: 1.6; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon">❌</div>
+    <div class="brand">Conan AI</div>
+    <h1>Auth Failed</h1>
+    <p>Check your client credentials and try again.<br/>Run <em>conan-gmail-auth</em> in your terminal.</p>
+  </div>
+</body>
+</html>`)
         server.close()
         reject(err)
       }

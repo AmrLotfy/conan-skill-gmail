@@ -49,6 +49,7 @@ async function main() {
     console.log(`\n  ✅ Gmail connected as: ${email}`)
     console.log('  You can now use Gmail in Conan chat.\n')
     console.log('  Try: "read my latest emails" or "search for emails from boss@company.com"\n')
+    process.exit(0)
   } catch (err) {
     console.log(`\n  ❌ Auth failed: ${err.message}\n`)
     process.exit(1)
