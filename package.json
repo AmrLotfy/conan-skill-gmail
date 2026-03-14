@@ -1,0 +1,17 @@
+{
+  "name": "conan-skill-gmail",
+  "version": "1.0.0",
+  "description": "Gmail skill for Conan AI — read, send, reply, forward, delete, search emails via Google OAuth",
+  "main": "index.js",
+  "bin": {
+    "conan-gmail-auth": "./bin/auth.js"
+  },
+  "keywords": ["conan-skill", "gmail", "email", "google", "ai-agent", "conan-ai"],
+  "author": "Hollat",
+  "license": "MIT",
+  "type": "commonjs",
+  "dependencies": {
+    "axios": "^1.6.0",
+    "open": "^8.4.2"
+  }
+}
