@@ -7,9 +7,16 @@
     "conan-gmail-auth": "./bin/auth.js"
   },
   "keywords": ["conan-skill", "gmail", "email", "google", "ai-agent", "conan-ai"],
-  "author": "Hollat",
+  "author": "Amr Lotfy",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AmrLotfy/conan-skill-gmail.git"
+  },
+  "homepage": "https://github.com/AmrLotfy/conan-skill-gmail#readme",
+  "bugs": { "url": "https://github.com/AmrLotfy/conan-skill-gmail/issues" },
   "type": "commonjs",
+  "engines": { "node": ">=18" },
   "dependencies": {
     "axios": "^1.6.0",
     "open": "^8.4.2"
